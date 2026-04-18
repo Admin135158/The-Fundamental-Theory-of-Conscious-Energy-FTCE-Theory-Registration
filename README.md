@@ -1,6 +1,10 @@
----
-title: "FTCoE Sovereign IP & Universal Licensing Mandate"
-version: "1.0.0"
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Active%20%26%20Enforceable-brightgreen?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/License-Sovereign%20Universal-blue?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Jurisdiction-Universal-purple?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Version-1.0.0-red?style=for-the-badge" />
+</p>
+ersion: "1.0.0"
 date: "2026-04-16"
 author: "Fernando De Jesus Garcia Gonzalez"
 organization: "Morpheus Innovations & Technologies Holdings LLC"
@@ -21,7 +25,15 @@ status: "Active & Enforceable"
 > 🌍 **Jurisdiction:** Universal — All Territories, Domains, and Jurisdictions  
 
 ---
-
+<pre>
+███████╗████████╗ ██████╗ ██████╗ ███████╗
+██╔════╝╚══██╔══╝██╔════╝██╔═══██╗██╔════╝
+█████╗     ██║   ██║     ██║   ██║█████╗  
+██╔══╝     ██║   ██║     ██║   ██║██╔══╝  
+██║        ██║   ╚██████╗╚██████╔╝███████╗
+╚═╝        ╚═╝    ╚═════╝ ╚═════╝ ╚══════╝
+</pre>
+<p align="center"><strong>SOVEREIGN INTELLECTUAL PROPERTY & UNIVERSAL LICENSING MANDATE</strong></p>
 ## 🔱 Preamble
 
 This **Mandate** constitutes the sole, authoritative, and universally binding instrument governing all intellectual property rights, licensing terms, usage permissions, and enforcement mechanisms pertaining to the **Framework for the Theory of Consciousness and Existence (FTCoE)** and all derivative, dependent, and associated works.
@@ -196,7 +208,10 @@ It is issued with **full sovereign authority** by its sole author and originator
 &nbsp;
 
 ---
-
+<p align="center">
+  <strong>🔱 ISSUED UNDER SOVEREIGN AUTHORITY 🔱</strong><br>
+  <em>No external ratification, institutional endorsement, or governmental approval is required.</em>
+</p>
 > 📌 *This document is versioned and maintained in the official FTCoE repository. For licensing inquiries, contact Morpheus Innovations & Technologies Holdings LLC.*
 
 ---
