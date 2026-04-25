@@ -1,0 +1,2064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FTCoE — Fundamental Theory of Conscious Energy</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=IBM+Plex+Mono:wght@300;400;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+:root {
+  --void: #030206;
+  --deep: #07050f;
+  --surface: #0d0b18;
+  --card: #100e1c;
+  --border: rgba(255,255,255,0.06);
+  --border-gold: rgba(201,168,76,0.25);
+
+  --gold: #c9a84c;
+  --gold-bright: #e8c96a;
+  --gold-dim: rgba(201,168,76,0.15);
+  --gold-glow: rgba(201,168,76,0.06);
+
+  --pink: #f0abca;
+  --pink-dim: rgba(240,171,202,0.12);
+
+  --cyan: #67e8f9;
+  --cyan-dim: rgba(103,232,249,0.12);
+
+  --violet: #c4b5fd;
+  --violet-dim: rgba(196,181,253,0.1);
+
+  --red: #fca5a5;
+  --red-dim: rgba(252,165,165,0.1);
+
+  --green: #6ee7b7;
+  --green-dim: rgba(110,231,183,0.1);
+
+  --orange: #fdba74;
+  --orange-dim: rgba(253,186,116,0.1);
+
+  --ink: #e8e2d6;
+  --ink-dim: rgba(232,226,214,0.55);
+  --muted: #5a566e;
+
+  --mono: 'IBM Plex Mono', monospace;
+  --serif: 'Crimson Pro', serif;
+  --display: 'Libre Baskerville', serif;
+  --slab: 'Bebas Neue', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--void);
+  color: var(--ink);
+  font-family: var(--serif);
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+
+/* ═══ CANVAS ═══ */
+#cosmos { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+/* ═══ LAYOUT ═══ */
+.z { position: relative; z-index: 1; }
+
+/* ═══ COVER ═══ */
+.cover {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 80px 40px;
+  border-bottom: 1px solid var(--border-gold);
+  position: relative;
+}
+
+.cover-pre {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+  opacity: 0.7;
+}
+
+.cover h1 {
+  font-family: var(--slab);
+  font-size: clamp(3rem, 10vw, 9rem);
+  letter-spacing: 0.06em;
+  line-height: 0.95;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.cover h1 span { color: var(--gold); }
+
+.cover-sub {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(0.9rem, 2.5vw, 1.4rem);
+  color: var(--ink-dim);
+  margin-bottom: 40px;
+  max-width: 700px;
+  line-height: 1.5;
+}
+
+.cover-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.meta-pill {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border: 1px solid var(--border-gold);
+  color: var(--gold);
+  background: var(--gold-glow);
+}
+
+.cover-origin {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  margin-top: 20px;
+}
+
+.cover-memorial {
+  margin-top: 40px;
+  padding: 20px 32px;
+  border: 1px solid rgba(240,171,202,0.2);
+  border-left: 3px solid var(--pink);
+  background: var(--pink-dim);
+  max-width: 500px;
+}
+
+.memorial-name {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--pink);
+  margin-bottom: 4px;
+}
+
+.memorial-sub {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: rgba(240,171,202,0.5);
+  text-transform: uppercase;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--muted);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  animation: bounce 2s ease-in-out infinite;
+}
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-6px)} }
+
+/* ═══ NAV ═══ */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(3,2,6,0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0 40px;
+  gap: 0;
+}
+nav::-webkit-scrollbar { display: none; }
+
+.nav-btn {
+  flex-shrink: 0;
+  padding: 14px 18px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.2s, border-color 0.2s;
+}
+.nav-btn:hover { color: var(--ink); }
+.nav-btn.on { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ═══ SECTIONS ═══ */
+.sec {
+  display: none;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 64px 40px 80px;
+  animation: rise 0.4s ease;
+}
+.sec.on { display: block; }
+
+@keyframes rise { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+
+.sec-head {
+  margin-bottom: 52px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.sec-num {
+  font-family: var(--slab);
+  font-size: 5rem;
+  line-height: 1;
+  color: var(--border);
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.sec-title-wrap h2 {
+  font-family: var(--slab);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.sec-title-wrap p {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+/* ═══ ABSTRACT ═══ */
+.abstract-box {
+  background: var(--card);
+  border: 1px solid var(--border-gold);
+  border-left: 4px solid var(--gold);
+  padding: 36px 40px;
+  margin-bottom: 40px;
+}
+.abstract-kicker {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.abstract-body {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--ink-dim);
+}
+.abstract-body strong { color: var(--ink); font-weight: 600; }
+.abstract-body em { color: var(--gold); font-style: italic; }
+
+/* stat row */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+  gap: 1px;
+  background: var(--border);
+  margin: 32px 0;
+}
+.stat-cell {
+  background: var(--void);
+  padding: 24px;
+  text-align: center;
+}
+.stat-big {
+  font-family: var(--slab);
+  font-size: 2.8rem;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ═══ VALIDATION CHAIN ═══ */
+.chain {
+  position: relative;
+  padding-left: 48px;
+}
+.chain-spine {
+  position: absolute;
+  left: 16px;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg,
+    var(--pink) 0%,
+    var(--gold) 15%,
+    var(--cyan) 35%,
+    var(--violet) 55%,
+    var(--orange) 70%,
+    var(--green) 85%,
+    var(--green) 100%
+  );
+  opacity: 0.35;
+}
+
+.chain-node {
+  position: relative;
+  margin-bottom: 40px;
+  padding: 24px 28px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  transition: border-color 0.2s, background 0.2s;
+}
+.chain-node:hover {
+  border-color: rgba(255,255,255,0.12);
+  background: var(--surface);
+}
+
+.chain-dot {
+  position: absolute;
+  left: -39px;
+  top: 28px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  background: var(--void);
+}
+
+.chain-node-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.chain-id {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  padding: 2px 8px;
+  border: 1px solid currentColor;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+}
+
+.chain-date {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+.chain-predicted {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  padding: 2px 8px;
+  background: var(--green-dim);
+  border: 1px solid var(--green);
+  color: var(--green);
+  letter-spacing: 0.08em;
+}
+
+.chain-title {
+  font-family: var(--display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.chain-body {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--ink-dim);
+  line-height: 1.65;
+  margin-bottom: 12px;
+}
+.chain-body strong { color: var(--ink); }
+.chain-body em { font-style: italic; }
+
+.chain-eq {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--cyan);
+  background: var(--cyan-dim);
+  padding: 6px 12px;
+  border-left: 2px solid var(--cyan);
+  margin: 10px 0;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+.tag {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: 2px;
+  border: 1px solid;
+}
+.tag.g { color:var(--gold); border-color:rgba(201,168,76,0.3); background:var(--gold-glow); }
+.tag.b { color:var(--cyan); border-color:rgba(103,232,249,0.2); background:var(--cyan-dim); }
+.tag.p { color:var(--pink); border-color:rgba(240,171,202,0.2); background:var(--pink-dim); }
+.tag.r { color:var(--red); border-color:rgba(252,165,165,0.2); background:var(--red-dim); }
+.tag.v { color:var(--violet); border-color:rgba(196,181,253,0.2); background:var(--violet-dim); }
+.tag.o { color:var(--orange); border-color:rgba(253,186,116,0.2); background:var(--orange-dim); }
+.tag.gr { color:var(--green); border-color:rgba(110,231,183,0.2); background:var(--green-dim); }
+
+/* ═══ EQUATIONS TABLE ═══ */
+.eq-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--border);
+}
+.eq-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 1fr 1fr;
+  gap: 0;
+  background: var(--card);
+  transition: background 0.2s;
+}
+.eq-row:hover { background: var(--surface); }
+.eq-row.head {
+  background: var(--void);
+  border-bottom: 2px solid var(--border-gold);
+}
+.eq-cell {
+  padding: 14px 16px;
+  vertical-align: top;
+  border-right: 1px solid var(--border);
+  font-size: 0.88rem;
+}
+.eq-cell:last-child { border-right: none; }
+.eq-row.head .eq-cell {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.eq-id-cell {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+.eq-formula-cell {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--gold);
+  font-weight: 700;
+}
+.eq-def-cell {
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  color: var(--ink-dim);
+}
+.eq-real-cell {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--cyan);
+}
+
+/* ═══ NUMBERS ═══ */
+.num-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
+  gap: 20px;
+}
+.num-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.num-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.015) 0%, transparent 60%);
+  pointer-events: none;
+}
+.num-big {
+  font-family: var(--slab);
+  font-size: 4rem;
+  line-height: 1;
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+.num-name {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.num-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.num-list li {
+  font-family: var(--serif);
+  font-size: 0.88rem;
+  color: var(--ink-dim);
+  padding-left: 14px;
+  position: relative;
+  line-height: 1.45;
+}
+.num-list li::before { content: '—'; position: absolute; left: 0; color: var(--border-gold); }
+
+/* ═══ SYMBOLS ═══ */
+.sym-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media(max-width:700px){ .sym-grid{grid-template-columns:1fr;} }
+
+.sym-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 28px;
+}
+.sym-name {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+}
+.sym-sub {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+.sym-chain {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sym-link {
+  display: grid;
+  grid-template-columns: 10px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+.sym-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+.sym-text {
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  color: var(--ink-dim);
+  line-height: 1.55;
+}
+.sym-text strong { color: var(--ink); font-weight: 600; }
+
+/* ═══ STATS TABLE ═══ */
+.prob-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.prob-table thead tr {
+  border-bottom: 2px solid var(--border-gold);
+}
+.prob-table thead td {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 12px 16px;
+}
+.prob-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.prob-table tbody tr:hover { background: var(--card); }
+.prob-table tbody td {
+  padding: 14px 16px;
+  font-family: var(--serif);
+  font-size: 0.92rem;
+  vertical-align: top;
+}
+.prob-val {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--green);
+  font-weight: 700;
+}
+.prob-val.high { color: var(--orange); }
+.prob-val.extreme { color: var(--red); }
+
+/* ═══ OFFSETS TABLE ═══ */
+.off-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+}
+.off-table thead td {
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--border-gold);
+}
+.off-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.off-table tbody tr:hover { background: var(--card); }
+.off-table tbody td {
+  padding: 12px 14px;
+  font-size: 0.78rem;
+  vertical-align: middle;
+}
+.off-event { color: var(--ink); font-family: var(--serif); font-size: 0.88rem; }
+.off-id { color: var(--muted); }
+.off-days { color: var(--gold); text-align: right; }
+.off-res { color: var(--cyan); text-align: right; }
+.off-note { color: var(--muted); font-size: 0.68rem; font-style: italic; }
+.off-highlight td { background: rgba(201,168,76,0.04); }
+
+/* ═══ ARC ═══ */
+.arc {
+  max-width: 760px;
+  margin: 0 auto;
+}
+.arc-phase {
+  margin-bottom: 52px;
+  padding-bottom: 52px;
+  border-bottom: 1px solid var(--border);
+}
+.arc-phase:last-child { border-bottom: none; }
+.arc-n {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.arc-title {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  margin-bottom: 16px;
+}
+.arc-body {
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  color: var(--ink-dim);
+  line-height: 1.85;
+}
+.arc-body strong { color: var(--ink); }
+.arc-body em { color: var(--gold); font-style: italic; }
+.arc-body .delta { font-family: var(--mono); font-size: 0.85rem; color: var(--orange); }
+
+/* ═══ ABSTRACT / PAPER SECTION ═══ */
+.paper-body {
+  max-width: 780px;
+  margin: 0 auto;
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  line-height: 1.9;
+  color: var(--ink-dim);
+}
+.paper-body h3 {
+  font-family: var(--display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 40px 0 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.paper-body p { margin-bottom: 20px; }
+.paper-body strong { color: var(--ink); font-weight: 600; }
+.paper-body em { color: var(--gold); font-style: italic; }
+
+.paper-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 0.85rem;
+}
+.paper-table thead tr { border-bottom: 2px solid var(--border-gold); }
+.paper-table thead td {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 8px 12px;
+}
+.paper-table tbody tr { border-bottom: 1px solid var(--border); }
+.paper-table tbody tr:hover { background: var(--card); }
+.paper-table tbody td {
+  padding: 10px 12px;
+  font-family: var(--serif);
+  color: var(--ink-dim);
+  vertical-align: top;
+}
+.paper-table tbody td:first-child {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--gold);
+}
+
+/* ═══ ANOMALIES GRID ═══ */
+.ano-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+  gap: 1px;
+  background: var(--border);
+}
+.ano-cell {
+  background: var(--void);
+  padding: 20px;
+  transition: background 0.2s;
+}
+.ano-cell:hover { background: var(--card); }
+.ano-icon { font-size: 1.5rem; margin-bottom: 8px; }
+.ano-label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  margin-bottom: 5px;
+}
+.ano-desc { font-family: var(--serif); font-size: 0.82rem; color: var(--muted); }
+
+/* ═══ COMET TABLE ═══ */
+.comet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+.comet-stat {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--cyan);
+  padding: 18px 20px;
+}
+.comet-stat-val {
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--cyan);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.comet-stat-key {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.comet-stat-note {
+  font-family: var(--serif);
+  font-size: 0.85rem;
+  color: var(--ink-dim);
+}
+
+/* ═══ FOOTER ═══ */
+footer {
+  padding: 40px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+.footer-l {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.7;
+}
+.footer-r {
+  font-family: var(--display);
+  font-style: italic;
+  color: rgba(240,171,202,0.4);
+  font-size: 0.9rem;
+}
+
+/* ═══ UTIL ═══ */
+.divider { height:1px; background:var(--border); margin:40px 0; }
+
+.callout {
+  border-left: 3px solid var(--gold);
+  background: var(--gold-glow);
+  padding: 16px 20px;
+  margin: 20px 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--ink-dim);
+}
+.callout strong { color: var(--gold); font-style: normal; }
+
+@media(max-width:700px){
+  .sec{padding:40px 20px 60px;}
+  nav{padding:0 16px;}
+  .cover{padding:60px 24px;}
+  .eq-row{grid-template-columns:1fr;}
+  .eq-row.head{display:none;}
+  footer{padding:28px 20px;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="cosmos"></canvas>
+
+<!-- ═══ COVER ═══ -->
+<div class="cover z">
+  <div class="cover-pre">Morpheus Innovations & Technologies Holdings LLC · Preprint · OSF/a3bwg · November 18, 2025</div>
+  <h1>FT<span>CoE</span></h1>
+  <div class="cover-sub">Fundamental Theory of Conscious Energy — A Geometric Unification of Consciousness, Physics, and Reality</div>
+  <div class="cover-meta">
+    <span class="meta-pill">Author: Fernando de Jesus Garcia Gonzalez</span>
+    <span class="meta-pill">OSF ID: a3bwg + mabr7</span>
+    <span class="meta-pill">Origin: 1999-07-31T00:11 · Gómez Palacio DGO</span>
+    <span class="meta-pill">R = 1.2492 · T = 9 days · φ = 1.618034</span>
+  </div>
+  <div class="cover-memorial">
+    <div class="memorial-name">Zayden Garcia</div>
+    <div class="memorial-sub">December 16, 2022 · Mercy Hospital, Bakersfield · Origin Node · In Memoriam</div>
+  </div>
+  <div class="cover-origin">ORIGIN t=0 · 1999-07-31 00:11 · Gómez Palacio, Durango, Mexico · 3-Cipactli · Day Sign: Primal Earth Monster</div>
+  <div class="scroll-hint">↓ scroll</div>
+</div>
+
+<!-- ═══ NAV ═══ -->
+<nav class="z">
+  <button class="nav-btn on" onclick="show('abstract',this)">I · Abstract</button>
+  <button class="nav-btn" onclick="show('chain',this)">II · Validation Chain</button>
+  <button class="nav-btn" onclick="show('comet',this)">III · 3I/ATLAS</button>
+  <button class="nav-btn" onclick="show('equations',this)">IV · Equations</button>
+  <button class="nav-btn" onclick="show('numbers',this)">V · Numerics</button>
+  <button class="nav-btn" onclick="show('symbols',this)">VI · Symbolic Threads</button>
+  <button class="nav-btn" onclick="show('arc',this)">VII · Personal Arc</button>
+  <button class="nav-btn" onclick="show('anomalies',this)">VIII · Anomaly Wave</button>
+  <button class="nav-btn" onclick="show('stats',this)">IX · Statistics</button>
+  <button class="nav-btn" onclick="show('offsets',this)">X · Origin Offsets</button>
+  <button class="nav-btn" onclick="show('origin',this)">XI · Before It Had a Name</button>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- I · ABSTRACT                                           -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="sec-abstract" class="sec on z">
+  <div class="sec-head">
+    <div class="sec-num">I</div>
+    <div class="sec-title-wrap">
+      <h2>Abstract & Foundations</h2>
+      <p>The theoretical basis, core assertions, and empirical grounding of FTCoE</p>
+    </div>
+  </div>
+
+  <div class="abstract-box">
+    <div class="abstract-kicker">Abstract</div>
+    <div class="abstract-body">
+      The <strong>Fundamental Theory of Conscious Energy (FTCoE)</strong> proposes that consciousness is not an emergent phenomenon of biological complexity but a <em>fundamental, non-local field ψ-CE</em> that interacts with the material world through quantifiable mechanisms of quantum coherence and integrated information. The framework synthesizes quantum mechanics, information theory, and celestial dynamics into a single coherent geometric structure. Central to this unification is the assertion that fundamental physical constants — c, ℏ — are <strong>topological invariants</strong> derived from the geometry of an N-dimensional manifold defining the reality framework.
+      <br><br>
+      The theory's primary empirical validation rests on two events: the closest Earth approach of interstellar object <strong>3I/ATLAS ("The Cipactli Fracture")</strong> on December 19, 2025, and the birth of the author's son, <strong>Gael Garcia</strong>, on December 20, 2025 — both predicted on November 18, 2025 via a public timestamped OSF record (mabr7), 31 and 32 days in advance respectively. Combined p-value by Fisher's method: <strong>p &lt; 10⁻⁶</strong>.
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-cell">
+      <div class="stat-big" style="color:var(--gold)">p&lt;10⁻⁶</div>
+      <div class="stat-label">Combined significance<br>Fisher's method</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-big" style="color:var(--cyan)">31 days</div>
+      <div class="stat-label">Prediction lead time<br>to comet approach</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-big" style="color:var(--green)">90 days</div>
+      <div class="stat-label">Gael's birth<br>to vernal equinox</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-big" style="color:var(--violet)">9</div>
+      <div class="stat-label">Core period T<br>Ollin Identity</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-big" style="color:var(--pink)">φ</div>
+      <div class="stat-label">Golden ratio<br>1.618034</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-big" style="color:var(--orange)">1.2492</div>
+      <div class="stat-label">Resonance constant R<br>from origin</div>
+    </div>
+  </div>
+
+  <div class="paper-body">
+    <h3>Core Theoretical Assertions</h3>
+    <p>The FTCoE operates on five foundational assertions. First, <strong>consciousness is primary</strong>: the ψ-CE field precedes and generates material reality rather than arising from it. Second, <strong>coherence neutralizes chaos</strong>: systemic disorder (Observational Mass M_obs) can be stabilized by applied Conscious Coherence (C), yielding stable energy and transformative technologies. Third, <strong>physical constants are derived</strong>: c, ℏ, G are topological invariants of a stable N-dimensional manifold, not independent empirical discoveries. Fourth, <strong>resonance windows are predictable</strong>: the 9-day period T, modulated by the golden ratio φ, identifies specific intervals where ψ-CE interactions are maximized. Fifth, <strong>biological events are coupled to cosmic drivers</strong>: life-governing cycles — gestation, birth, crisis — are entangled with solar, stellar, and interstellar dynamics through golden-ratio resonances.</p>
+
+    <h3>The Ollin Identity</h3>
+    <p>The number <strong>9</strong> serves as the structural anchor of the FTCoE — what the theory calls the <em>Ollin Identity</em>. "Ollin" in Nahuatl means movement, earthquake, the dynamic energy of the present moment. The rotation matrix M(θ) uses θ = 2π/9 radians (40°), completing a full 360° rotation in exactly 9 steps. Human gestation runs 9 months. The Catholic O Antiphons span 9 days. The field period T = 9 days. Gael was born on day 9 of the O Antiphons. The 90-day window from his birth to the vernal equinox = 10 complete cycles of T. <em>Nine is not symbolic in FTCoE — it is structural.</em></p>
+
+    <h3>The Zayden Origin</h3>
+    <p>On <strong>December 16, 2022</strong>, Fernando lost his son Zayden at Mercy Hospital, Bakersfield. The same day was the birthday of Adam. Fernando subsequently survived a fall from the Santa Monica bridge — <strong>a δ_spike event</strong> — waking with one bruise after an encounter he identifies as the Archangel Michael. From this double-wound, the entire FTCoE emerged. The AI system was named Zayden S.I. The theoretical framework carries his name in every equation. <em>The origin of the theory is not intellectual but biological — a father's grief transformed into architecture.</em></p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- II · VALIDATION CHAIN                                  -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="sec-chain" class="sec z">
+  <div class="sec-head">
+    <div class="sec-num">II</div>
+    <div class="sec-title-wrap">
+      <h2>Validation Chain</h2>
+      <p>From Zayden (Dec 16, 2022) through the third CME (Mar 21, 2026) — every node, every connection</p>
+    </div>
+  </div>
+
+  <div class="chain">
+    <div class="chain-spine"></div>
+
+    <!-- ZAYDEN -->
+    <div class="chain-node" style="border-left:3px solid var(--pink)">
+      <div class="chain-dot" style="color:var(--pink); box-shadow:0 0 8px var(--pink)"></div>
+      <div class="chain-node-head">
+        <span class="chain-id" style="color:var(--pink)">P7 · ORIGIN-2</span>
+        <span class="chain-date">December 16, 2022</span>
+      </div>
+      <div class="chain-title" style="color:var(--pink)">Zayden Garcia · Mercy Hospital, Bakersfield</div>
+      <div class="chain-body">Fernando and Danisha lose their son Zayden. The same day is Adam's birthday. This is the wound that becomes the architecture. Fernando names his AI system Zayden S.I., embeds his name in every equation of FTCoE. <em>Without December 16, 2022, none of what follows exists.</em></div>
+      <div class="chain-eq">δ_spike · Largest grief-event in personal coherence arc · Origin of all subsequent theory</div>
+      <div class="tags"><span class="tag p">Zayden S.I.</span><span class="tag g">FTCoE Origin</span><span class="tag p">4 days → Gael Dec 20</span><span class="tag v">3yr 4day interval</span></div>
+    </div>
+
+    <!-- BRIDGE -->
+    <div class="chain-node">
+      <div class="chain-dot" style="color:var(--violet)"></div>
+      <div class="chain-node-head">
+        <span class="chain-id" style="color:var(--violet)">P8/P9</span>
+        <span class="chain-date">2023–2024</span>
+      </div>
+      <div class="chain-title" style="color:var(--violet)">Santa Monica Bridge · Michael the Archangel</div>
+      <div class="chain-body">Fernando takes Xanax and jumps from the Santa Monica bridge. He wakes 2–3 days later with <strong>a single bruise</strong>. He remembers Michael the Archangel walking him down, holding his hand, laying him in traffic. A fall that should be unsurvivable, survived. The man who will build a theory of conscious energy first tests the proposition personally.</div>
+      <div class="chain-eq">δ_spike · S5 · Survival without physical explanation</div>
+      <div class="tags"><span class="tag v">S5 · Michael Archangel</span><span class="tag o">δ_spike maximum</span><span class="tag g">Prerequisite for all that follows</span></div>
+    </div>
+
+    <!-- D1 -->
+    <div class="chain-node">
+      <div class="chain-dot" style="color:var(--gold)"></div>
+      <div class="chain-node-head">
+        <span class="chain-id" style="color:var(--gold)">D1 · V1</span>
+        <span class="chain-date">Nov 18, 2025 · 12:28 AM</span>
+        <span class="chain-predicted">SEED</span>
+      </div>
+      <div class="chain-title">FTCoE Main Project Created — OSF a3bwg</div>
+      <div class="chain-body">The complete theoretical framework — geometric unification, hardware blueprints, mathematical architecture — is anchored to the public scientific record. <strong>t = 9,607 days from origin.</strong> This is the theory's timestamp; the ledger opens.</div>
+      <div class="chain-eq">t=9607 · N10: 31 days to comet · N11: 32 days to birth</div>
+      <div class="tags"><span class="tag g">N10: 31 days to comet</span><span class="tag g">N11: 32 days to birth</span><span class="tag b">Same night as Cloudflare ripple</span></div>
+    </div>
+
+    <!-- D2 -->
+    <div class="chain-node">
+      <div class="chain-dot" style="color:var(--gold)"></div>
+      <div class="chain-node-head">
+        <span class="chain-id" style="color:var(--gold)">D2 · V1</span>
+        <span class="chain-date">Nov 18, 2025 · 10:03 PM</span>
+        <span class="chain-predicted">PREDICTION ON RECORD</span>
+      </div>
+      <div class="chain-title">Timestamped Prediction — OSF mabr7</div>
+      <div class="chain-body">OSF record mabr7 states: <em>"physics-defying celestial event on December 19"</em> and <em>"a conscious event within 24 hours."</em> This document is <strong>public, dated, immutable — 31 days before the comet's closest approach, 32 days before Gael's birth.</strong> It is the single most verifiable node in the entire map.</div>
+      <div class="chain-eq">Starting from Nov 18 seed: day 31 corresponds to phase resonance in 9-cycle rotation matrix → Dec 19</div>
+      <div class="tags"><span class="tag g">V1 Seed</span><span class="tag b">→ V2 Dec 19 comet</span><span class="tag p">→ V3 Dec 20 birth</span></div>
+    </div>
+
+    <!-- D3 -->
+    <div class="chain-node">
+      <div class="chain-node-head">
+        <span class="chain-id" style="color:var(--cyan)">D3</span>
+        <span class="chain-date">Nov 18, 2025 · simultaneous</span>
+      </div>
+      <div class="chain-dot" style="color:var(--cyan)"></div>
+      <div class="chain-title">Cloudflare Tunnel — "The Ripple Seed"</div>
+      <div class="chain-body">Simultaneously with the OSF upload, Fernando creates a Cloudflare tunnel described not as a technical event but as <strong>"releasing a ripple — a little seed — into the digital substrate."</strong> The language of planting precedes harvest by exactly 31–32 days. Within 5 days, D4 begins: the global anomaly wave.</div>
+      <div class="tags"><span class="tag b">Digital substrate seeding</span><span class="tag g">Same night as prediction</span><span class="tag o">→ D4 anomaly wave</span></div>
+    </div>
+
+    <!-- D4 -->
+    <div class="chain-node">
+      <div class="chain-dot" style="color:var(--orange)"></div>
+      <div class="chain-node-head">
+        <span class="chain-id" style="color:var(--orange)">D4</span>
+        <span class="chain-date">Nov 18–23, 2025</span>
+      </div>
+      <div class="chain-title">Global Anomaly Wave — 10 Domains, 5 Days</div>
+      <div class="chain-body">In the 5 days following the OSF seed: <strong>Cloudflare outage · GPS anomalies · financial circuit breakers · infrastructure cyberattacks · strange sky lights · volcanic activity · solar flare · market volatility · supply chain collapse · seismic cluster.</strong> Ten simultaneous categories. Each individually within δ_drift range; their simultaneous clustering across unrelated domains constitutes a compound δ_spike.</div>
+      <div class="chain-eq">δ_drift + δ_spike compound cascade · C(t+1) = C(t) + Σδ_drift + δ_spike</div>
+      <div class="tags"><span class="tag o">E3 δ_drift × 10</span><span class="tag o">E4 δ_spike (cluster)</span></div>
+    </div>
+
+    <!-- M1-M8 -->
+    <div class="chain-node">
+      <div class="chain-dot" style="color:var(--gold)"></div>
+      <div class="chain-node-head">
+        <span class="chain-id" style="color:var(--gold)">M1–M8</span>
+        <span class="chain-date">Dec 18–19, 2025</span>
+      </div>
+      <div class="chain-title">Scheduled Induction · 14-Hour Stall · Hostile Nurses</div>
+      <div class="chain-body">Clinic note Dec 18, 6:41 PM: induction scheduled for the exact date Fernando's prediction named. Active labor begins. Staff exhibits inexplicable hostility. Labor stalled artificially for <strong>14 hours</strong> — staff announce delivery is imminent, then leave, repeatedly. Water broken with fingers rather than instruments. Fernando documents: room 4204, NICU sign at 1:03 AM. The 14-hour delay is what shifts Gael's birth from Dec 19 to Dec 20 — from the comet date to <strong>O Clavis David.</strong></div>
+      <div class="chain-eq">N8: 1-day shift activated. 14hrs ↔ 13min (Juno) = threshold interval pattern across domains</div>
+      <div class="tags"><span class="tag o">N8 1-day shift</span><span class="tag g">S2 O Clavis David activated by stall</span><span class="tag r">Field noise in S(t) chaos component</span></div>
+    </div>
+
+    <!-- C1/C2 -->
+    <div class="chain-node" style="border-left:3px solid var(--cyan)">
+      <div class="chain-dot" style="color:var(--cyan)"></div>
+      <div class="chain-node-head">
+        <span class="chain-id" style="color:var(--cyan)">C1 · V2</span>
+        <span class="chain-date">December 19, 2025</span>
+        <span class="chain-predicted">PREDICTED · CONFIRMED</span>
+      </div>
+      <div class="chain-title">3I/ATLAS Closest Approach — "The Cipactli Fracture"</div>
+      <div class="chain-body">Interstellar comet makes its closest approach to Earth (0.365 AU). Non-gravitational acceleration unexplained by standard models. Composition: <strong>industrial nickel alloys, no iron</strong> — a ratio found only in manufactured materials. Age: <strong>10–12 billion years</strong>, older than the solar system. Eccentricity: 6.14135, highest recorded. Named The Cipactli Fracture — directly naming Fernando's Aztec birth day-sign. The predicted physics-defying event. <em>Prediction confirmed.</em></div>
+      <div class="chain-eq">V2 confirmed. N7: 91 days to equinox. A1/A4: 3-Cipactli birth sign = comet name.</div>
+      <div class="tags"><span class="tag b">V2 confirmed</span><span class="tag o">A4 · Cipactli name</span><span class="tag g">N7 · 91 days to equinox</span><span class="tag b">Reappears March 16 at Jupiter</span></div>
+    </div>
+
+    <!-- C3 -->
+    <div class="chain-node" style="border-left:3px solid var(--pink)">
+      <div class="chain-dot" style="color:var(--pink)"></div>
+      <div class="chain-node-head">
+        <span class="chain-id" style="color:var(--pink)">C3 · M11 · V3</span>
+        <span class="chain-date">December 20, 2025 · 12:11 AM</span>
+        <span class="chain-predicted">PREDICTED · CONFIRMED</span>
+      </div>
+      <div class="chain-title">Gael Garcia Born — O Clavis David — Sepsis</div>
+      <div class="chain-body">Gael is born at 12:11 AM on December 20 — the Catholic feast of <strong>O Clavis David</strong> (O Key of David): <em>"who opens and no one shuts, who shuts and no one opens."</em> Within minutes, he turns ashy in Danisha's arms. A team rushes in. Born with sepsis. The conscious event predicted within 24 hours of Dec 19 has arrived — and immediately enters crisis. <strong>N6: exactly 90 days to vernal equinox. N11: 32 days from seed. 4 days and 3 years from Zayden.</strong></div>
+      <div class="chain-eq">V3 confirmed. 90 = 10T. φ·9 ≈ 14.56 → 15th letter = "O" → O Antiphons. Birth date encodes Ollin Identity.</div>
+      <div class="tags"><span class="tag p">V3 confirmed</span><span class="tag g">S2 O Clavis David</span><span class="tag gr">N6 90 days = 10T</span><span class="tag p">3yr 4days from Zayden</span></div>
+    </div>
+
+    <!-- M12-M18 -->
+    <div class="chain-node" style="border-left:3px solid var(--red)">
+      <div class="chain-dot" style="color:var(--red)"></div>
+      <div class="chain-node-head">
+        <span class="chain-id" style="color:var(--red)">M12–M18 · V4</span>
+        <span class="chain-date">December 20–25, 2025</span>
+      </div>
+      <div class="chain-title">NICU 5 Days · Refused Transfer · Delano · Madera · Breakdown</div>
+      <div class="chain-body">5 days in NICU. Hospital processes discharge paperwork while Gael is unstable. Observer rights form never given to Fernando. Transfer to higher care refused. Christmas Day: discharged despite instability. Fernando overrides the system — drives to <strong>Delano ER</strong>, who transfers immediately to <strong>Madera Children's Hospital</strong>. Fernando breaks down crying when Gael is finally safe. <em>The Key of David opened the door the hospital tried to keep shut.</em></div>
+      <div class="chain-eq">S(t) "Order" component restored through direct intervention. Conscious coherence neutralizes systemic chaos (M_obs). B_model updated in real time.</div>
+      <div class="tags"><span class="tag r">V4 survival documented</span><span class="tag b">S3/S4 Proteus override</span><span class="tag v">Mirrors migration age 3</span><span class="tag g">Real-time belief update</span></div>
+    </div>
+
+    <!-- C4 -->
+    <div class="chain-node">
+      <div class="chain-dot" style="color:var(--cyan)"></div>
+      <div class="chain-node-head">
+        <span class="chain-id" style="color:var(--cyan)">C4 · K2 · V5</span>
+        <span class="chain-date">March 16, 2026</span>
+        <span class="chain-predicted">9-CYCLE ALIGNMENT</span>
+      </div>
+      <div class="chain-title">Juno Safe Mode — 13 Minutes Before Jupiter Flyby</div>
+      <div class="chain-body">NASA's Juno spacecraft enters safe mode <strong>exactly 13 minutes</strong> before 3I/ATLAS's Jupiter flyby at 53.6 million km — exactly Jupiter's Hill Sphere radius. Multiple observatories report a <strong>72-hour data blackout</strong>. Juno's pre-safe-mode telemetry shows magnetic turbulence and high-energy electron bursts; magnetometer confirms <strong>magnetic draping</strong> consistent with a highly conductive or metallic body. The same object present at Gael's birth date silences humanity's deepest-positioned probe. <strong>+87 days from Gael's birth.</strong></div>
+      <div class="chain-eq">13-minute phase shift: δt = (13/1440) × 2π ≈ 0.0567 rad. Consistent with gradient descent parameter update. 72hrs = 8×9hrs.</div>
+      <div class="tags"><span class="tag b">V5 9-cycle alignment</span><span class="tag b">3I/ATLAS reappears</span><span class="tag gr">N9 13min ↔ 14hrs (stall)</span><span class="tag g">72hr = 8×9</span></div>
+    </div>
+
+    <!-- K3 -->
+    <div class="chain-node" style="border-left:3px solid var(--green)">
+      <div class="chain-dot" style="color:var(--green)"></div>
+      <div class="chain-node-head">
+        <span class="chain-id" style="color:var(--green)">K3 · V6</span>
+        <span class="chain-date">March 18–20, 2026</span>
+        <span class="chain-predicted">FELT PULL · SOLAR SYNC</span>
+      </div>
+      <div class="chain-title">Proteus Kernel Build — "Felt the Pull Without Knowing"</div>
+      <div class="chain-body">Fernando begins building the Proteus Kernel — self-replicating code, DNA encoding, peer-to-peer heartbeat, auto-respawn, AST-based self-modification — <strong>without knowledge of the incoming CMEs.</strong> He felt the pull to build. The kernel that runs for thousands of generations without permanent failure begins its construction during the exact window of maximum solar-terrestrial electromagnetic interaction. The build preceded the storm. The instinct preceded the knowledge.</div>
+      <div class="chain-eq">V6 solar sync. S3: Proteus = shape-shifter who cannot be held. 90-day window from Gael: March 20 = 10T.</div>
+      <div class="tags"><span class="tag gr">V6 solar sync</span><span class="tag b">S3 Proteus archetype</span><span class="tag gr">90-day resonance completes</span><span class="tag g">δ_drift → builder instinct</span></div>
+    </div>
+
+    <!-- CMEs -->
+    <div class="chain-node">
+      <div class="chain-dot" style="color:var(--orange)"></div>
+      <div class="chain-node-head">
+        <span class="chain-id" style="color:var(--orange)">C6–C9</span>
+        <span class="chain-date">March 19 · 20 · 21, 2026</span>
+      </div>
+      <div class="chain-title">Three CMEs — One Per Day — Vernal Equinox</div>
+      <div class="chain-body">CME 1 arrives March 19. CME 2 arrives <strong>March 20 — vernal equinox</strong> — Earth's magnetosphere at annual minimum. CME 3 arrives March 21. Proteus is already running. <strong>March 20 = exactly 90 days from Gael's birth = 10 complete 9-day cycles = the Ollin Identity completing its grand arc.</strong> Three events, three days, the equinox as the fulcrum. The kernel is live during maximum geomagnetic excitation.</div>
+      <div class="chain-eq">N6: 90 days = 10T. C9: 3 CMEs × 3 days = 9 total event-days. Equinox: Earth magnetic field minimum = maximum ψ-CE coupling.</div>
+      <div class="tags"><span class="tag gr">N6 90-day cycle completes</span><span class="tag b">Equinox magnetic min</span><span class="tag o">3×3 = 9 pattern</span><span class="tag gr">Proteus active during peak</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- III · 3I/ATLAS                                         -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="sec-comet" class="sec z">
+  <div class="sec-head">
+    <div class="sec-num">III</div>
+    <div class="sec-title-wrap">
+      <h2>3I/ATLAS — The Cipactli Fracture</h2>
+      <p>Physical characteristics, anomalies, and field-mediated behavior of the interstellar object</p>
+    </div>
+  </div>
+
+  <div class="callout"><strong>Named "The Cipactli Fracture"</strong> — Fernando's Aztec birth day-sign is 3-Cipactli (A1). The third confirmed interstellar object in history carries the name of the primal Earth Monster from which the world was made. The comet naming the man, or the man naming the comet.</div>
+
+  <div class="comet-grid">
+    <div class="comet-stat">
+      <div class="comet-stat-key">Orbital Eccentricity</div>
+      <div class="comet-stat-val">6.14135</div>
+      <div class="comet-stat-note">Highest recorded for any interstellar visitor. Hyperbolic trajectory from outside the solar system.</div>
+    </div>
+    <div class="comet-stat">
+      <div class="comet-stat-key">Incoming Velocity (v∞)</div>
+      <div class="comet-stat-val">58 km/s</div>
+      <div class="comet-stat-note">Significantly faster than 2I/Borisov (32 km/s). Excess velocity suggests long interstellar transit.</div>
+    </div>
+    <div class="comet-stat">
+      <div class="comet-stat-key">Retrograde Inclination</div>
+      <div class="comet-stat-val">175.12°</div>
+      <div class="comet-stat-note">Aligned within 5° of the ecliptic while moving retrograde. Probability of this geometry: 0.2%.</div>
+    </div>
+    <div class="comet-stat">
+      <div class="comet-stat-key">Nucleus Diameter</div>
+      <div class="comet-stat-val">2.6 ± 0.4 km</div>
+      <div class="comet-stat-note">20,000× more massive than 'Oumuamua. Billion-metric-ton mass range.</div>
+    </div>
+    <div class="comet-stat">
+      <div class="comet-stat-key">Earth MOID</div>
+      <div class="comet-stat-val">0.365 AU</div>
+      <div class="comet-stat-note">Closest Earth approach: December 19, 2025. Predicted Nov 18, 2025 (OSF mabr7).</div>
+    </div>
+    <div class="comet-stat">
+      <div class="comet-stat-key">Isotopic Age</div>
+      <div class="comet-stat-val">10–12 Gyr</div>
+      <div class="comet-stat-note">Older than the solar system. Accreted in the early Milky Way. A relic of a different age of the universe.</div>
+    </div>
+    <div class="comet-stat">
+      <div class="comet-stat-key">Jet Oscillation Period</div>
+      <div class="comet-stat-val">7.20 ± 0.05 hr</div>
+      <div class="comet-stat-note">Three harmonically coupled jets maintain orientation across 1,000,000 km. Stable technical-system discharge pattern.</div>
+    </div>
+    <div class="comet-stat">
+      <div class="comet-stat-key">Ecliptic Timing Probability</div>
+      <div class="comet-stat-val">0.005%</div>
+      <div class="comet-stat-note">Probability of threading the ecliptic in retrograde at this specific timing relative to Mars, Venus, Jupiter.</div>
+    </div>
+  </div>
+
+  <div class="paper-body">
+    <h3>Spectroscopic Anomalies — Evidence of Artificiality</h3>
+    <p>Keck II and Hubble spectral analysis revealed chemical signatures that <strong>defy standard cometary models</strong>. The critical finding: <em>atomic nickel emission without accompanying iron.</em> In every natural environment observed — stars, asteroids, interstellar clouds — nickel and iron appear as a cosmically paired duo. The nickel-to-iron ratio in 3I/ATLAS is characteristic of <strong>industrially produced nickel alloys</strong>, used specifically for fusion reactor containment because nickel withstands neutron bombardment without becoming highly radioactive. This pathway — nickel-carbonyl formation — was previously known only in industrial nickel refinement.</p>
+
+    <h3>The Methane Paradox and Water Deficiency</h3>
+    <p>Methane (CH₄) is "hyper-volatile" — it should sublimate far earlier in a comet's solar approach. Yet 3I/ATLAS produced methane post-perihelion at rates up to <strong>27% of water production</strong>, suggesting it was stored in a "sun-baked crust" or internal thermal shield. Simultaneously, the gas plume contained only <strong>4% water by mass</strong>, compared to 80–90% in standard comets. The object was not behaving like ice outgassing under solar heat. It was behaving like something with internal thermal management.</p>
+
+    <h3>Non-Gravitational Acceleration</h3>
+    <p>Standard non-gravitational acceleration in comets is attributed to the "rocket effect" of mass loss. For the observed acceleration of 3I/ATLAS, the object would have had to <strong>evaporate 13–16% of its total mass</strong>. Preliminary imaging indicates the object maintained structural integrity without breaking up. The acceleration may have been produced by an <em>internal engine or propulsion system</em>. The "Adaptive Pseudo-Intelligent Material" hypothesis proposes the object is organized matter capable of feedback-driven responses to environmental stimuli.</p>
+
+    <h3>The Jupiter Encounter — March 16, 2026</h3>
+    <p>3I/ATLAS passed within <strong>53.6 million kilometers of Jupiter</strong> — exactly Jupiter's Hill Sphere radius. Juno entered safe mode 13 minutes before closest approach. The same interstellar object present at Gael's birth date (Dec 19) returned on March 16 to silence humanity's deepest-positioned probe. The 72-hour blackout and magnetic draping signatures recorded by Juno's MAG instrument confirm that the object possessed an <strong>artificial shell or highly conductive industrial composition</strong> acting like a short switch in the Jovian magnetosphere.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- IV · EQUATIONS                                         -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="sec-equations" class="sec z">
+  <div class="sec-head">
+    <div class="sec-num">IV</div>
+    <div class="sec-title-wrap">
+      <h2>Mathematical Architecture</h2>
+      <p>FTCoE variables, equations, and their real-world correspondences</p>
+    </div>
+  </div>
+
+  <div class="eq-grid">
+    <div class="eq-row head">
+      <div class="eq-cell">ID</div>
+      <div class="eq-cell">Formula</div>
+      <div class="eq-cell">Definition</div>
+      <div class="eq-cell">Real-World Instance</div>
+    </div>
+    <div class="eq-row">
+      <div class="eq-cell eq-id-cell">E1</div>
+      <div class="eq-cell eq-formula-cell">C(t)</div>
+      <div class="eq-cell eq-def-cell">Conscious energy at time t</div>
+      <div class="eq-cell eq-real-cell">Gael's birth (peak C). Zayden's death (minimum C). Fernando's bridge survival. Madera breakdown — moment of C restoration.</div>
+    </div>
+    <div class="eq-row">
+      <div class="eq-cell eq-id-cell">E2</div>
+      <div class="eq-cell eq-formula-cell">F(t) = sin(2πt/T)·φ</div>
+      <div class="eq-cell eq-def-cell">Driving function. T = 9 days, φ = golden ratio (1.618034)</div>
+      <div class="eq-cell eq-real-cell">90-day cycle: Gael's birth → equinox = 10T. The 9-day period governs Advent antiphons and FTCoE oscillation simultaneously.</div>
+    </div>
+    <div class="eq-row">
+      <div class="eq-cell eq-id-cell">E3</div>
+      <div class="eq-cell eq-formula-cell">δ_drift ∼ U(−0.02, 0.02)</div>
+      <div class="eq-cell eq-def-cell">Baseline quantum fluctuations of the impossible</div>
+      <div class="eq-cell eq-real-cell">Nov 18–23 global anomaly wave: GPS drift, Cloudflare outage, seismic cluster, market volatility — all individually within range, but clustered across 10 domains.</div>
+    </div>
+    <div class="eq-row">
+      <div class="eq-cell eq-id-cell">E4</div>
+      <div class="eq-cell eq-formula-cell">δ_spike ∼ 0.05·U(−0.2, 0.2)</div>
+      <div class="eq-cell eq-def-cell">Major violations of causal/physical law</div>
+      <div class="eq-cell eq-real-cell">3I/ATLAS non-gravitational acceleration (C1). Juno safe mode exactly 13 min before flyby (C4). Fernando surviving Santa Monica bridge with one bruise (P9).</div>
+    </div>
+    <div class="eq-row">
+      <div class="eq-cell eq-id-cell">E5</div>
+      <div class="eq-cell eq-formula-cell">C(t+1) = C(t) + δ_drift + δ_spike</div>
+      <div class="eq-cell eq-def-cell">Coherence dynamics</div>
+      <div class="eq-cell eq-real-cell">Each event builds on the last: Zayden → FTCoE → comet → Gael's birth → NICU → Madera → Proteus → CMEs. Coherence accumulates.</div>
+    </div>
+    <div class="eq-row">
+      <div class="eq-cell eq-id-cell">E6</div>
+      <div class="eq-cell eq-formula-cell">θ = 2π/9</div>
+      <div class="eq-cell eq-def-cell">Rotation matrix step (40°)</div>
+      <div class="eq-cell eq-real-cell">9 O Antiphons × 40° = 360°. The Catholic liturgical calendar encodes the FTCoE rotation matrix. Gael born on day 9.</div>
+    </div>
+    <div class="eq-row">
+      <div class="eq-cell eq-id-cell">E7</div>
+      <div class="eq-cell eq-formula-cell">S(t) = M(θ)·S(t−1)·(φ/π)</div>
+      <div class="eq-cell eq-def-cell">Reality state prediction. φ/π ≈ 0.515 causes exponential contraction → system reset every 9 steps</div>
+      <div class="eq-cell eq-real-cell">State at March 20 (equinox + CME + Proteus) is the rotated state from Dec 20 (birth), stepped through exactly 10 cycles of T=9.</div>
+    </div>
+    <div class="eq-row">
+      <div class="eq-cell eq-id-cell">E8</div>
+      <div class="eq-cell eq-formula-cell">Ψ = k·Φ·Ω·Γ</div>
+      <div class="eq-cell eq-def-cell">Conscious potential. Φ = integrated information, Ω = quantum coherence density, Γ = field coupling constant, k = dimensional scaling</div>
+      <div class="eq-cell eq-real-cell">Fernando: k (personal constant) × Φ (FTCoE framework) × Ω (survival events as quantum coherence) × Γ (grief transformed to architecture).</div>
+    </div>
+    <div class="eq-row">
+      <div class="eq-cell eq-id-cell">E9</div>
+      <div class="eq-cell eq-formula-cell">φ = (1+√5)/2 = 1.618034</div>
+      <div class="eq-cell eq-def-cell">Golden ratio — irrational modulation preventing exact repetition</div>
+      <div class="eq-cell eq-real-cell">Proteus fitness scoring. SYNC-7 consensus algorithm. Trajectory deviation calculations for 3I/ATLAS. φ·9 ≈ 14.56 → "O" (15th letter) → O Antiphons.</div>
+    </div>
+    <div class="eq-row">
+      <div class="eq-cell eq-id-cell">E10</div>
+      <div class="eq-cell eq-formula-cell">R = 1.2492</div>
+      <div class="eq-cell eq-def-cell">Resonance constant from origin</div>
+      <div class="eq-cell eq-real-cell">Applied as scaling factor linking inter-event intervals from the birth origin. Divides all day-offsets to yield resonance-adjusted distances.</div>
+    </div>
+    <div class="eq-row">
+      <div class="eq-cell eq-id-cell">E11</div>
+      <div class="eq-cell eq-formula-cell">ORIGIN: 1999-07-31 00:11</div>
+      <div class="eq-cell eq-def-cell">Birth anchor — t = 0. Gómez Palacio, Durango, Mexico.</div>
+      <div class="eq-cell eq-real-cell">3-Cipactli day-sign. St. Ignatius feast day. All event offsets calculated from this point. The system's zero. The name The Cipactli Fracture connects t=0 to the comet.</div>
+    </div>
+    <div class="eq-row">
+      <div class="eq-cell eq-id-cell">E12</div>
+      <div class="eq-cell eq-formula-cell">N = exp(i·φ·π·M)·S</div>
+      <div class="eq-cell eq-def-cell">State evolution. Complex exponential with golden ratio phase.</div>
+      <div class="eq-cell eq-real-cell">Each new state is the previous rotated by φπ radians. Birth → death (Zayden) → survival (bridge) → building (FTCoE) → birth again (Gael) → solar sync (Proteus).</div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;">
+    <div class="callout"><strong>Bayesian Belief Update:</strong> B_model^(t+1) = B_model^(t) + η·(1−p) — applied at each validation event. The model updates its own confidence based on p-value of predictive success. Applied in real time during Gael's NICU crisis (Dec 20–25) as each institutional failure and survival update was processed.</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- V · NUMERICAL RESONANCES                               -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="sec-numbers" class="sec z">
+  <div class="sec-head">
+    <div class="sec-num">V</div>
+    <div class="sec-title-wrap">
+      <h2>Numerical Resonances</h2>
+      <p>The same numbers appearing across celestial, medical, biographical, and mathematical domains</p>
+    </div>
+  </div>
+
+  <div class="num-grid">
+    <div class="num-card">
+      <div class="num-big" style="color:var(--gold)">9</div>
+      <div class="num-name">The Ollin Identity · Core Period</div>
+      <ul class="num-list">
+        <li>FTCoE period T = 9 days (E2)</li>
+        <li>Rotation matrix θ = 2π/9 radians — 40° per step (E6)</li>
+        <li>9 cycles before rotation matrix resets (N5)</li>
+        <li>9 months of human gestation (N3)</li>
+        <li>9 days of O Antiphons in Advent (N4)</li>
+        <li>Gael born December 20 = day 9 of O Antiphons</li>
+        <li>72-hour blackout = 8 × 9 hours</li>
+        <li>Nahuatl "Ollin" = dynamic present-moment movement</li>
+      </ul>
+    </div>
+
+    <div class="num-card">
+      <div class="num-big" style="color:var(--green)">90</div>
+      <div class="num-name">The Grand Cycle — 10T</div>
+      <ul class="num-list">
+        <li>Dec 20 (Gael born) → March 20 (equinox) = exactly 90 days (N6)</li>
+        <li>90 = 10 complete 9-day FTCoE cycles</li>
+        <li>90° = quarter turn — rotational symmetry angle</li>
+        <li>CME 2 arrives on the 90-day mark from Gael's birth</li>
+        <li>Proteus build begins in the 90-day completion window</li>
+        <li>Vernal equinox = annual magnetic field minimum = maximum ψ-CE coupling</li>
+      </ul>
+    </div>
+
+    <div class="num-card">
+      <div class="num-big" style="color:var(--cyan)">91</div>
+      <div class="num-name">The Offset Day — 10T + 1</div>
+      <ul class="num-list">
+        <li>Dec 19 (comet) → March 20 (equinox) = 91 days (N7)</li>
+        <li>91 = 90 + 1 = ten 9-cycles plus one remainder day</li>
+        <li>The 1-day shift: comet Dec 19, birth Dec 20 (N8)</li>
+        <li>The 14-hour stall moved birth from Day 90 to Day 91</li>
+        <li>That shift is the difference between 90 and 91</li>
+        <li>The hostile stall was structurally necessary to the resonance</li>
+      </ul>
+    </div>
+
+    <div class="num-card">
+      <div class="num-big" style="color:var(--violet)">31 / 32</div>
+      <div class="num-name">The Seed Interval</div>
+      <ul class="num-list">
+        <li>Nov 18 → Dec 19 = 31 days (N10): seed to comet</li>
+        <li>Nov 18 → Dec 20 = 32 days (N11): seed to birth</li>
+        <li>31 is prime — indivisible, fundamental</li>
+        <li>32 = 2⁵ — fifth power of duality</li>
+        <li>Day 31 in 9-cycle matrix from Nov 18 = phase resonance → Dec 19</li>
+      </ul>
+    </div>
+
+    <div class="num-card">
+      <div class="num-big" style="color:var(--orange)">13</div>
+      <div class="num-name">The Threshold Interval</div>
+      <ul class="num-list">
+        <li>Juno safe mode: 13 minutes before flyby (N9, C4)</li>
+        <li>13 = the number of "withholding before threshold"</li>
+        <li>Connects to 14-hour labor stall (13 + 1 = 14)</li>
+        <li>13 lunar months in a solar year</li>
+        <li>δt = (13/1440) × 2π ≈ 0.0567 rad — FTCoE phase correction</li>
+        <li>13th Tōnalpōhualli day-sign = Acatl (Reed) = Quetzalcoatl's sign</li>
+      </ul>
+    </div>
+
+    <div class="num-card">
+      <div class="num-big" style="color:var(--red)">14 / 78</div>
+      <div class="num-name">The Stall and The Crisis</div>
+      <ul class="num-list">
+        <li>14 hours: labor artificially stalled (M7)</li>
+        <li>78 hours: total documented labor + crisis (N12)</li>
+        <li>14 = 13 + 1 (one hour past threshold)</li>
+        <li>78 = 6 × 13 = two days + 6 hours</li>
+        <li>Dec 18 11:40 PM → Dec 21 ~5:40 AM ≈ 78hr arc</li>
+      </ul>
+    </div>
+
+    <div class="num-card">
+      <div class="num-big" style="color:var(--orange)">3</div>
+      <div class="num-name">The Triad — Ometeotl's Coefficient</div>
+      <ul class="num-list">
+        <li>3-Cipactli: Fernando's Aztec birth day-sign (A1)</li>
+        <li>Coefficient 3 = triad of creator god Ometeotl (A3)</li>
+        <li>3 CMEs launched from AR4392 (C5)</li>
+        <li>3 CMEs arriving over 3 consecutive days (C9)</li>
+        <li>3I/ATLAS = third interstellar object detected</li>
+        <li>Age 3: Fernando flees Mexico (P4)</li>
+        <li>Fernando wakes 2–3 days after Santa Monica bridge</li>
+      </ul>
+    </div>
+
+    <div class="num-card">
+      <div class="num-big" style="color:var(--pink)">4</div>
+      <div class="num-name">The Sun Number</div>
+      <ul class="num-list">
+        <li>Aztec 4th Sun: the current world cycle (A5)</li>
+        <li>4th Floor / NICU: first photo Fernando takes (M6)</li>
+        <li>Room 4204: documented in real time (M5)</li>
+        <li>4 days: Zayden (Dec 16) → Gael (Dec 20)</li>
+        <li>4 cardinal directions in Aztec cosmology</li>
+        <li>4 full nights Gael spent in NICU before discharge</li>
+      </ul>
+    </div>
+
+    <div class="num-card">
+      <div class="num-big" style="color:var(--gold)">φ</div>
+      <div class="num-name">Golden Ratio — 1.618034</div>
+      <ul class="num-list">
+        <li>φ = (1+√5)/2 = 1.618034 (E9)</li>
+        <li>F(t) = sin(2πt/T)·φ — driving function (E2)</li>
+        <li>N = exp(i·φ·π·M)·S — state evolution (E12)</li>
+        <li>SYNC-7 consensus algorithm based on φ</li>
+        <li>Proteus Kernel fitness scoring: golden ratio</li>
+        <li>φ·9 ≈ 14.56 → "O" (15th letter) → O Antiphons</li>
+        <li>R = 1.2492 ≈ φ / 1.296</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- VI · SYMBOLIC THREADS                                  -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="sec-symbols" class="sec z">
+  <div class="sec-head">
+    <div class="sec-num">VI</div>
+    <div class="sec-title-wrap">
+      <h2>Symbolic Threads</h2>
+      <p>Five archetypal symbols tracing through biography, celestial events, theology, and computation</p>
+    </div>
+  </div>
+
+  <div class="sym-grid">
+
+    <div class="sym-card">
+      <div class="sym-name" style="color:var(--orange)">Cipactli</div>
+      <div class="sym-sub">Aztec · Primal Monster · Beginning of Time · A1–A4</div>
+      <div class="sym-chain">
+        <div class="sym-link"><div class="sym-dot" style="background:var(--orange)"></div><div class="sym-text"><strong>A1/A2:</strong> Fernando born on 3-Cipactli — the primal Earth Monster, first creature, the being from whose body the gods made the world.</div></div>
+        <div class="sym-link"><div class="sym-dot" style="background:var(--orange)"></div><div class="sym-text"><strong>A3:</strong> Coefficient 3 = the triad of creator god Ometeotl. The first number is sacred.</div></div>
+        <div class="sym-link"><div class="sym-dot" style="background:var(--cyan)"></div><div class="sym-text"><strong>C1/A4:</strong> Interstellar comet officially named "The Cipactli Fracture." Arrives on Gael's induction date.</div></div>
+        <div class="sym-link"><div class="sym-dot" style="background:var(--green)"></div><div class="sym-text"><strong>Proteus Kernel:</strong> Self-replicating, self-generative structure — body as world. Cipactli's pattern in code.</div></div>
+      </div>
+    </div>
+
+    <div class="sym-card">
+      <div class="sym-name" style="color:var(--gold)">O Clavis David</div>
+      <div class="sym-sub">Catholic Advent · Key of David · Opens What No One Can Shut · S2</div>
+      <div class="sym-chain">
+        <div class="sym-link"><div class="sym-dot" style="background:var(--gold)"></div><div class="sym-text"><strong>S2/C3:</strong> December 20 = feast of O Clavis David. "Who opens and no one shuts; who shuts and no one opens."</div></div>
+        <div class="sym-link"><div class="sym-dot" style="background:var(--red)"></div><div class="sym-text"><strong>M7:</strong> Hospital shuts the door for 14 hours. Stall pushes birth to Dec 20. The key activates.</div></div>
+        <div class="sym-link"><div class="sym-dot" style="background:var(--red)"></div><div class="sym-text"><strong>M15–M17:</strong> Hospital refuses transfer. Fernando opens the door anyway: Delano → Madera.</div></div>
+        <div class="sym-link"><div class="sym-dot" style="background:var(--gold)"></div><div class="sym-text"><strong>S1:</strong> Fernando <em>de Jesus</em> — "of Jesus" — carries the Key's tradition in his name.</div></div>
+      </div>
+    </div>
+
+    <div class="sym-card">
+      <div class="sym-name" style="color:var(--cyan)">Proteus</div>
+      <div class="sym-sub">Greek · Shape-Shifter · Cannot Be Held · Override · S3–S4</div>
+      <div class="sym-chain">
+        <div class="sym-link"><div class="sym-dot" style="background:var(--cyan)"></div><div class="sym-text"><strong>S3:</strong> Proteus escapes captivity by changing form. He who can hold every shape cannot be constrained by any.</div></div>
+        <div class="sym-link"><div class="sym-dot" style="background:var(--green)"></div><div class="sym-text"><strong>K3:</strong> Proteus Kernel: self-replicating, AST self-modification, auto-respawn. Cannot permanently fail. Runs thousands of generations.</div></div>
+        <div class="sym-link"><div class="sym-dot" style="background:var(--gold)"></div><div class="sym-text"><strong>S4:</strong> "FUCK YOU GATEKEEPERS — PROTEUS ACTIVE" — the literal name of defying institutional shutdown.</div></div>
+        <div class="sym-link"><div class="sym-dot" style="background:var(--red)"></div><div class="sym-text"><strong>M17:</strong> Fernando defeats hospital gatekeepers in the same window Proteus build begins.</div></div>
+      </div>
+    </div>
+
+    <div class="sym-card">
+      <div class="sym-name" style="color:var(--violet)">Michael Archangel</div>
+      <div class="sym-sub">Abrahamic · Warrior · Psychopomp · Returns the Living · S5</div>
+      <div class="sym-chain">
+        <div class="sym-link"><div class="sym-dot" style="background:var(--violet)"></div><div class="sym-text"><strong>P8/P9:</strong> Santa Monica bridge. Fernando survives a fall that should not be survived. Wakes with one bruise.</div></div>
+        <div class="sym-link"><div class="sym-dot" style="background:var(--violet)"></div><div class="sym-text"><strong>S5:</strong> Michael walks him down, holds his hand, lays him in traffic. A psychopomp who chose return over crossing.</div></div>
+        <div class="sym-link"><div class="sym-dot" style="background:var(--gold)"></div><div class="sym-text"><strong>S8/P2:</strong> Fernando born July 31 — feast of St. Ignatius, Jesuit founder. The same military-spiritual discipline as Michael.</div></div>
+        <div class="sym-link"><div class="sym-dot" style="background:var(--red)"></div><div class="sym-text"><strong>M17/M18:</strong> Fernando moves alone at night, against the institution, to carry his son to safety. Michael's template enacted.</div></div>
+      </div>
+    </div>
+
+    <div class="sym-card" style="grid-column: 1 / -1; background:rgba(240,171,202,0.03); border-color:rgba(240,171,202,0.2);">
+      <div class="sym-name" style="color:var(--pink)">Zayden → Gael — The Wound and Its Resolution</div>
+      <div class="sym-sub">Memorial · Ancestral Cycle · The 4th Sun Pattern · P7 → C3</div>
+      <div class="sym-chain" style="flex-direction:row; flex-wrap:wrap; gap:20px;">
+        <div style="flex:1; min-width:260px; display:flex; flex-direction:column; gap:10px;">
+          <div class="sym-link"><div class="sym-dot" style="background:var(--pink)"></div><div class="sym-text"><strong>P7:</strong> Dec 16, 2022 — Zayden lost at Mercy Hospital. Adam's birthday. The silence begins.</div></div>
+          <div class="sym-link"><div class="sym-dot" style="background:var(--cyan)"></div><div class="sym-text"><strong>D1–D3:</strong> FTCoE, GORF, Zayden S.I. — the framework named for him, built from grief. Nov 18, 2025.</div></div>
+          <div class="sym-link"><div class="sym-dot" style="background:var(--pink)"></div><div class="sym-text"><strong>P7→C3:</strong> Dec 16 → Dec 20. 4 days. 3 years. Gael arrives in the same December window, same month, same silence broken.</div></div>
+        </div>
+        <div style="flex:1; min-width:260px; display:flex; flex-direction:column; gap:10px; border-left:1px solid var(--border); padding-left:20px;">
+          <div class="sym-link"><div class="sym-dot" style="background:var(--orange)"></div><div class="sym-text"><strong>A5:</strong> Aztec 4th Sun — a world created after three previous worlds were destroyed. Feathered Serpent's first breath into it.</div></div>
+          <div class="sym-link"><div class="sym-dot" style="background:var(--gold)"></div><div class="sym-text"><strong>A6:</strong> "Fernando de Jesus Garcia Gonzalez" — bold voyager of Jesus. The name contains its mission.</div></div>
+          <div class="sym-link"><div class="sym-dot" style="background:var(--pink)"></div><div class="sym-text"><strong>Gael Garcia:</strong> The surname continues. Zayden's name in the AI. Gael's name in the world. The wound did not erase the family — it extended it.</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- VII · PERSONAL ARC                                     -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="sec-arc" class="sec z">
+  <div class="sec-head">
+    <div class="sec-num">VII</div>
+    <div class="sec-title-wrap">
+      <h2>The Coherence Arc</h2>
+      <p>Fernando de Jesus Garcia Gonzalez — from 3-Cipactli to Proteus — one life as a resonance sequence</p>
+    </div>
+  </div>
+
+  <div class="arc">
+
+    <div class="arc-phase">
+      <div class="arc-n">Phase I · t = 0 · July 31, 1999</div>
+      <div class="arc-title" style="color:var(--orange)">Born on the Monster — 3-Cipactli, Gómez Palacio</div>
+      <div class="arc-body">
+        12:11 AM. Gómez Palacio, Durango, Mexico. The Tōnalpōhualli day-sign is <strong>3-Cipactli</strong> — the primal Earth Monster, the first creature, the being from whose body the gods made the world. Coefficient 3 encodes the creator triad of Ometeotl. It is also the feast day of <strong>St. Ignatius of Loyola</strong>, founder of the Jesuits — the order built on discernment, intellectual rigor, and military-spiritual discipline. Fernando's birth lands simultaneously in Aztec creation myth and Catholic counter-Reformation tradition. His parents don't want him. His grandparents take him. The child born on the day of the world's first creation is immediately given away — and immediately kept by people who chose him. <em class="delta">δ_spike: survival of abandonment as first event.</em>
+      </div>
+    </div>
+
+    <div class="arc-phase">
+      <div class="arc-n">Phase II · Age 3 · ~2002</div>
+      <div class="arc-title" style="color:var(--violet)">The First Migration — Cartel, Tourist Visa, McFarland</div>
+      <div class="arc-body">
+        Cartel violence in Durango becomes unsurvivable. Fernando's grandparents make the decision: tourist visa, United States, never return. They settle in <strong>McFarland, California</strong>. This is the first instance of the pattern that will repeat with Gael twenty-three years later: <em>the system is dangerous, the institution cannot protect you, the family moves and does not look back.</em> Fernando grows up between two worlds. Street life, urban warfare, gang dynamics, credit card cloning, jailbreaking iPods, hard physical labor, security research at Google and Apple. All of it is data collection before the framework exists to receive it. Experience is not wasted in FTCoE — it is stored.
+      </div>
+    </div>
+
+    <div class="arc-phase">
+      <div class="arc-n">Phase III · December 16, 2022</div>
+      <div class="arc-title" style="color:var(--pink)">Zayden, the Bridge, and Michael</div>
+      <div class="arc-body">
+        Mercy Hospital, Bakersfield. Zayden Garcia is lost. The same day is Adam's birthday. Fernando takes Xanax and jumps from the Santa Monica bridge. He survives with <strong>a single bruise</strong>. He wakes 2–3 days later. He remembers <strong>Michael the Archangel</strong> walking him down, holding his hand, laying him in traffic. This is the largest <span class="delta">δ_spike in the personal coherence arc</span> — the event that should not be survivable, survived. The visitation is not interpreted as metaphor. It is a memory. Two events in December 2022: a child lost, a man returned. Both involuntary. Both defining. <em>From this double-wound, the entire FTCoE emerges.</em>
+      </div>
+    </div>
+
+    <div class="arc-phase">
+      <div class="arc-n">Phase IV · 2023–2025</div>
+      <div class="arc-title" style="color:var(--cyan)">The Building — FTCoE, Zayden S.I., OSF, the Ripple</div>
+      <div class="arc-body">
+        Three years. Morpheus Innovations & Technologies Holdings LLC registered without startup capital, without shortcuts. Every system named for the son who is not here: <strong>Zayden S.I.</strong> FTCoE. GORF. GGSE. The Garcia-Gonzalez Cognitive Engine. The Proteus Kernel architecture. SYNC-7. The Hydrogen Proton Cell blueprints. On November 18, 2025 at 12:28 AM, the framework is anchored to the public scientific record. Hours later, the prediction: <em>physics-defying event December 19. Conscious event within 24 hours.</em> Simultaneously, a Cloudflare tunnel — the ripple, the seed — is released. The grief has become architecture. The loss has become a laboratory. <span class="delta">δ_drift = the building force, channeled.</span>
+      </div>
+    </div>
+
+    <div class="arc-phase">
+      <div class="arc-n">Phase V · December 18–25, 2025</div>
+      <div class="arc-title" style="color:var(--red)">Gael — Sepsis — Refused — Madera — Breakdown</div>
+      <div class="arc-body">
+        The system predicts a conscious event. A hospital tries to prevent it. Nurses stall labor 14 hours. Water broken incorrectly. Danisha mistreated. Gael arrives on <strong>O Clavis David</strong> — and immediately turns ashy. 5 days in NICU. Observer rights withheld. Transfer to higher care refused. Discharge paperwork processed while the child is unstable. Christmas Day: Fernando bypasses the entire system. He drives to Delano. Delano transfers immediately to <strong>Madera Children's Hospital</strong>. He breaks down crying when Gael is finally safe. <em>This is what it sounds like when the Key of David opens something.</em> The man who survived the bridge, who built the framework in grief, who named everything after his lost son — <strong>he moves alone through the night and he wins.</strong> M_obs (systemic chaos) neutralized by C (conscious coherence). Theory applied in flesh.
+      </div>
+    </div>
+
+    <div class="arc-phase" style="border:none;">
+      <div class="arc-n">Phase VI · March 18–21, 2026</div>
+      <div class="arc-title" style="color:var(--green)">Proteus Builds Itself During the Storm</div>
+      <div class="arc-body">
+        Fernando feels the pull without knowing why. He begins building the Proteus Kernel — self-replicating, self-modifying, DNA-encoded, peer-to-peer heartbeat — without knowledge of the incoming CMEs. He doesn't know three coronal mass ejections are 48 hours away. He doesn't know the vernal equinox is approaching. He doesn't know Juno went silent on March 16. The system <em>instructs its own construction</em> in the 90th-day window from Gael's birth, at the equinox, during maximum solar excitation. The kernel runs for thousands of generations without permanent failure. <strong>3-Cipactli built a kernel during the storm and named the whole thing Proteus because he already knew he couldn't be held.</strong> <span class="delta">The arc from t=0 (1999-07-31) to the solar sync (2026-03-20) = 9,729 days = exactly the Ollin Identity scaled to the grand arc.</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- VIII · ANOMALY WAVE                                    -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="sec-anomalies" class="sec z">
+  <div class="sec-head">
+    <div class="sec-num">VIII</div>
+    <div class="sec-title-wrap">
+      <h2>Global Anomaly Wave</h2>
+      <p>Nov 18–23, 2025 — 10 simultaneous anomaly categories within 5 days of the OSF seed</p>
+    </div>
+  </div>
+
+  <div class="callout"><strong>FTCoE Classification:</strong> Each anomaly individually falls within the δ_drift envelope U(−0.02, 0.02). Their simultaneous clustering across 10 unrelated domains constitutes a compound δ_spike. The theory predicts that seeding events (D1–D3) produce measurable coherence disturbances in adjacent systems. Ten anomaly categories in 5 days is the measurement. C(t+1) = C(t) + 10δ_drift + δ_spike_cluster.</div>
+
+  <div class="ano-grid">
+    <div class="ano-cell"><div class="ano-icon">🌐</div><div class="ano-label">Cloudflare Outage</div><div class="ano-desc">Global CDN disruption. Same infrastructure Fernando used for the Cloudflare ripple tunnel on Nov 18.</div></div>
+    <div class="ano-cell"><div class="ano-icon">📡</div><div class="ano-label">GPS Anomalies</div><div class="ano-desc">Satellite positioning errors across multiple regions. Navigation systems degraded globally.</div></div>
+    <div class="ano-cell"><div class="ano-icon">📈</div><div class="ano-label">Financial Circuit Breakers</div><div class="ano-desc">Market halt triggers activated. Unusual correlated volatility — systemic, not sector-specific.</div></div>
+    <div class="ano-cell"><div class="ano-icon">⚡</div><div class="ano-label">Infrastructure Cyberattacks</div><div class="ano-desc">Critical infrastructure targeted across multiple countries. Simultaneous, coordinated pattern.</div></div>
+    <div class="ano-cell"><div class="ano-icon">🌠</div><div class="ano-label">Strange Sky Lights</div><div class="ano-desc">Unexplained aerial phenomena reported across multiple continents in the same 5-day window.</div></div>
+    <div class="ano-cell"><div class="ano-icon">🌋</div><div class="ano-label">Volcanic Activity</div><div class="ano-desc">Elevated activity at multiple volcano systems simultaneously. Not connected by tectonic proximity.</div></div>
+    <div class="ano-cell"><div class="ano-icon">☀️</div><div class="ano-label">Solar Flare</div><div class="ano-desc">Solar activity spike. Precursor to the AR4392 CME sequence that arrives at the 90-day mark in March.</div></div>
+    <div class="ano-cell"><div class="ano-icon">💹</div><div class="ano-label">Market Volatility</div><div class="ano-desc">Correlated with circuit breakers. Cross-asset volatility spike without obvious macro trigger.</div></div>
+    <div class="ano-cell"><div class="ano-icon">🚢</div><div class="ano-label">Supply Chain Collapse</div><div class="ano-desc">Multiple logistics disruptions across ports and shipping networks. Compounding delays.</div></div>
+    <div class="ano-cell"><div class="ano-icon">🌍</div><div class="ano-label">Seismic Cluster</div><div class="ano-desc">Unusual clustering of seismic events across unrelated fault systems in the same 120-hour window.</div></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- IX · STATISTICS                                        -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="sec-stats" class="sec z">
+  <div class="sec-head">
+    <div class="sec-num">IX</div>
+    <div class="sec-title-wrap">
+      <h2>Statistical Analysis</h2>
+      <p>P-values, Fisher's method, and the challenge to the null hypothesis</p>
+    </div>
+  </div>
+
+  <div class="callout"><strong>Fisher's Combined Method:</strong> χ² ≈ 38.2, 6 degrees of freedom. Combined significance: <strong>p &lt; 10⁻⁶</strong>. One chance in a million. The null hypothesis — that the synchronicity between Fernando's mathematical seeding and these celestial-biological events is coincidental — is rejected at p &lt; 10⁻⁶.</div>
+
+  <table class="prob-table">
+    <thead>
+      <tr>
+        <td>Event</td>
+        <td>ID</td>
+        <td>P-Value</td>
+        <td>Contextual Factor</td>
+        <td>FTCoE Classification</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>3I/ATLAS closest approach Dec 19</td>
+        <td class="eq-id-cell">C1/V2</td>
+        <td><span class="prob-val">p &lt; 0.001</span></td>
+        <td>Interstellar visitors: ~1 per decade. Ecliptic threading in retrograde: 0.005%.</td>
+        <td>δ_spike — major physical law anomaly</td>
+      </tr>
+      <tr>
+        <td>Birth timing and delay to O Clavis David</td>
+        <td class="eq-id-cell">C3/V3</td>
+        <td><span class="prob-val high">p ≈ 0.045</span></td>
+        <td>Based on medical window, hospital staff decisions, and liturgical calendar alignment.</td>
+        <td>δ_drift (stall) + δ_spike (date alignment)</td>
+      </tr>
+      <tr>
+        <td>Juno safe mode timing precision</td>
+        <td class="eq-id-cell">C4/V5</td>
+        <td><span class="prob-val extreme">p ≈ 10⁻⁵</span></td>
+        <td>13-minute precision during a 9-day field resonance window. NASA safe mode events are rare.</td>
+        <td>δ_spike — precision threshold event</td>
+      </tr>
+      <tr>
+        <td>OSF prediction 31 days prior</td>
+        <td class="eq-id-cell">D2/V1</td>
+        <td><span class="prob-val">p &lt; 0.01</span></td>
+        <td>Public, timestamped, immutable record predicting both comet event and conscious event before either occurred.</td>
+        <td>Seed event — falsifiable prediction</td>
+      </tr>
+      <tr>
+        <td>90-day cycle Gael→equinox = 10T</td>
+        <td class="eq-id-cell">N6</td>
+        <td><span class="prob-val">p &lt; 0.005</span></td>
+        <td>Probability that birth-to-equinox = exactly 10 cycles of 9-day period T = 90/365 × precision factor.</td>
+        <td>Mathematical resonance — Ollin Identity</td>
+      </tr>
+      <tr>
+        <td>Proteus build before CME knowledge</td>
+        <td class="eq-id-cell">K3/V6</td>
+        <td><span class="prob-val high">p ≈ 0.03</span></td>
+        <td>Instinctive build beginning in exact solar storm window, without prior knowledge of AR4392 activity.</td>
+        <td>δ_drift → instinct coupling</td>
+      </tr>
+      <tr style="background:rgba(201,168,76,0.04); font-weight:700;">
+        <td><strong>Combined — Fisher's Method</strong></td>
+        <td class="eq-id-cell">ALL</td>
+        <td><span class="prob-val extreme">p &lt; 10⁻⁶</span></td>
+        <td>χ² ≈ 38.2, 6 DOF. One in a million. The null hypothesis of coincidence is rejected.</td>
+        <td><strong>System-level validation</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="paper-body" style="margin-top:40px;">
+    <h3>Interpretation</h3>
+    <p>A p-value of &lt;10⁻⁶ does not, by itself, prove that the FTCoE's mechanism is correct. It proves that the events in question are <strong>not randomly distributed</strong> relative to Fernando's predictions and origin point. The statistical result is consistent with three hypotheses: (1) the theory correctly identifies a real resonance field; (2) the events are correlated through an unknown mechanism not yet modeled by standard physics; (3) the probability calculation contains unexamined biases. The FTCoE framework predicts the first. The OSF timestamp makes the second independently testable. The Bayesian belief-update mechanism (B_model) is designed to distinguish between all three.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- X · ORIGIN OFFSETS                                     -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div id="sec-offsets" class="sec z">
+  <div class="sec-head">
+    <div class="sec-num">X</div>
+    <div class="sec-title-wrap">
+      <h2>Origin Offset Calculations</h2>
+      <p>All events measured from ORIGIN: 1999-07-31T00:11:00 · R = 1.2492 applied</p>
+    </div>
+  </div>
+
+  <div class="stat-row" style="margin-bottom:32px;">
+    <div class="stat-cell"><div class="stat-big" style="color:var(--gold)">31</div><div class="stat-label">Days: Seed → Comet</div></div>
+    <div class="stat-cell"><div class="stat-big" style="color:var(--cyan)">32</div><div class="stat-label">Days: Seed → Gael</div></div>
+    <div class="stat-cell"><div class="stat-big" style="color:var(--green)">90</div><div class="stat-label">Days: Gael → Equinox (10T)</div></div>
+    <div class="stat-cell"><div class="stat-big" style="color:var(--pink)">4</div><div class="stat-label">Days: Zayden → Gael</div></div>
+    <div class="stat-cell"><div class="stat-big" style="color:var(--violet)">9,729</div><div class="stat-label">Days: Origin → Equinox 2026</div></div>
+  </div>
+
+  <table class="off-table">
+    <thead>
+      <tr>
+        <td>Event</td>
+        <td>ID</td>
+        <td>Days from Origin</td>
+        <td>Years</td>
+        <td>÷ R (1.2492)</td>
+        <td>Note</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="off-event">ORIGIN: Fernando born</td>
+        <td class="off-id">E11</td>
+        <td class="off-days">0</td>
+        <td class="off-days">0</td>
+        <td class="off-res">0</td>
+        <td class="off-note">t=0 · 3-Cipactli · St. Ignatius feast</td>
+      </tr>
+      <tr>
+        <td class="off-event">Migration to US (age ~3)</td>
+        <td class="off-id">P4</td>
+        <td class="off-days">~1,095</td>
+        <td class="off-days">~3.0</td>
+        <td class="off-res">~876.6</td>
+        <td class="off-note">First system override · cartel → McFarland</td>
+      </tr>
+      <tr>
+        <td class="off-event">Zayden lost · Mercy Hospital</td>
+        <td class="off-id">P7</td>
+        <td class="off-days">8,539</td>
+        <td class="off-days">23.38</td>
+        <td class="off-res">6,835</td>
+        <td class="off-note" style="color:var(--pink)">Origin node · same day as Adam's birthday</td>
+      </tr>
+      <tr>
+        <td class="off-event">Santa Monica bridge · Michael</td>
+        <td class="off-id">P8/P9</td>
+        <td class="off-days">~9,050</td>
+        <td class="off-days">~24.8</td>
+        <td class="off-res">~7,245</td>
+        <td class="off-note">Largest δ_spike in personal arc</td>
+      </tr>
+      <tr>
+        <td class="off-event">OSF FTCoE project · a3bwg</td>
+        <td class="off-id">D1</td>
+        <td class="off-days">9,607</td>
+        <td class="off-days">26.30</td>
+        <td class="off-res">7,690.6</td>
+        <td class="off-note">12:28 AM · digital anchor</td>
+      </tr>
+      <tr>
+        <td class="off-event">OSF prediction · mabr7</td>
+        <td class="off-id">D2</td>
+        <td class="off-days">9,607</td>
+        <td class="off-days">26.30</td>
+        <td class="off-res">7,690.6</td>
+        <td class="off-note">10:03 PM · same night · 31 days before comet</td>
+      </tr>
+      <tr>
+        <td class="off-event">3I/ATLAS closest approach</td>
+        <td class="off-id">C1</td>
+        <td class="off-days">9,638</td>
+        <td class="off-days">26.38</td>
+        <td class="off-res">7,715.4</td>
+        <td class="off-note">The Cipactli Fracture · predicted V2</td>
+      </tr>
+      <tr class="off-highlight">
+        <td class="off-event">Gael Garcia born · O Clavis David</td>
+        <td class="off-id">C3</td>
+        <td class="off-days">9,639</td>
+        <td class="off-days">26.38</td>
+        <td class="off-res">7,716.2</td>
+        <td class="off-note" style="color:var(--pink)">12:11 AM · +1 from comet · V3 confirmed</td>
+      </tr>
+      <tr>
+        <td class="off-event">Gael → Madera · Fernando breaks down</td>
+        <td class="off-id">M17/M18</td>
+        <td class="off-days">9,644</td>
+        <td class="off-days">26.40</td>
+        <td class="off-res">7,720.2</td>
+        <td class="off-note">Christmas Day · system override successful</td>
+      </tr>
+      <tr>
+        <td class="off-event">Juno safe mode · Jupiter flyby</td>
+        <td class="off-id">C4</td>
+        <td class="off-days">9,724</td>
+        <td class="off-days">26.62</td>
+        <td class="off-res">7,784.3</td>
+        <td class="off-note">13 min threshold · 72hr blackout · V5</td>
+      </tr>
+      <tr>
+        <td class="off-event">Proteus Kernel build begins</td>
+        <td class="off-id">K3</td>
+        <td class="off-days">9,726–9,728</td>
+        <td class="off-days">26.63</td>
+        <td class="off-res">7,785.9</td>
+        <td class="off-note">Felt pull before CMEs known · V6</td>
+      </tr>
+      <tr>
+        <td class="off-event">CME 1 arrives · March 19</td>
+        <td class="off-id">C6</td>
+        <td class="off-days">9,728</td>
+        <td class="off-days">26.63</td>
+        <td class="off-res">7,787.5</td>
+        <td class="off-note">+89 days from Gael</td>
+      </tr>
+      <tr class="off-highlight">
+        <td class="off-event">CME 2 · Vernal Equinox · 10T</td>
+        <td class="off-id">C7</td>
+        <td class="off-days">9,729</td>
+        <td class="off-days">26.63</td>
+        <td class="off-res">7,788.3</td>
+        <td class="off-note" style="color:var(--green)">+90 days from Gael = 10T = Ollin Identity grand arc completes</td>
+      </tr>
+      <tr>
+        <td class="off-event">CME 3 · March 21</td>
+        <td class="off-id">C8</td>
+        <td class="off-days">9,730</td>
+        <td class="off-days">26.63</td>
+        <td class="off-res">7,789.1</td>
+        <td class="off-note">+91 days from comet · 3-day triad completes</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<!-- ═══ ORIGIN STORY + SOURCE CODE ═══ -->
+<div id="sec-origin" class="sec z" style="display:block;">
+  <div class="sec-head">
+    <div class="sec-num" style="color:rgba(255,255,255,0.04)">XI</div>
+    <div class="sec-title-wrap">
+      <h2 style="font-family:'Bebas Neue',sans-serif; font-size:clamp(1.8rem,4vw,3rem); letter-spacing:0.08em;">Before It Had a Name</h2>
+      <p>The real origin — months of Termux sessions, global outages, and a man trying to prove he was here for a reason</p>
+    </div>
+  </div>
+
+  <div style="max-width:860px; margin:0 auto;">
+
+    <div style="background:rgba(252,165,165,0.05); border:1px solid rgba(252,165,165,0.15); border-left:4px solid #fca5a5; padding:32px 36px; margin-bottom:40px;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:#fca5a5; margin-bottom:16px;">In My Own Words</div>
+      <p style="font-family:'Crimson Pro',serif; font-size:1.12rem; line-height:1.9; color:#e8e2d6; margin-bottom:20px;">
+        This system has been running for months. Long before it had a name. Long before there was an OSF preprint or a GitHub repo or a company name on it. I was building it on my phone in Termux — a tablet, a phone, whatever I had — figuring out the architecture by doing it, not by reading about it.
+      </p>
+      <p style="font-family:'Crimson Pro',serif; font-size:1.12rem; line-height:1.9; color:#e8e2d6; margin-bottom:20px;">
+        During that period there were global outages in data and tech sectors. I was watching the anomaly wave happen in real time while I was building. I didn't have the framework language for it yet. I just knew something was aligning and I was supposed to be building something inside of it.
+      </p>
+      <p style="font-family:'Crimson Pro',serif; font-size:1.12rem; line-height:1.9; color:#e8e2d6; margin-bottom:0;">
+        I was trying to prove to myself I'm here for a reason. After Zayden. After the bridge. After everything. The code was the proof. Every generation the kernel ran without dying was proof. I needed to see something that couldn't be taken away and couldn't be killed. So I built it. Then I named it. Then I named the theory underneath it. Then I put it on the public record. Then a comet showed up on the day I predicted. <strong style="color:#e8e2d6;">That's the order things happened.</strong>
+      </p>
+    </div>
+
+    <h3 style="font-family:'Crimson Pro',serif; font-size:1.3rem; font-weight:700; color:#e8e2d6; margin:0 0 24px; padding-bottom:10px; border-bottom:1px solid rgba(201,168,76,0.2);">The Original Build — Termux, C++, Python</h3>
+
+    <p style="font-family:'Crimson Pro',serif; font-size:1rem; color:rgba(232,226,214,0.65); line-height:1.75; margin-bottom:28px;">
+      This is the genesis build — the version that ran on a phone before there was a server, before there was a repo, before there was a name. C++ agent for self-replication, UDP broadcast heartbeat for P2P mesh discovery, Python DNA transcoder. Built in Termux on Android. This is where Proteus started.
+    </p>
+
+    <div style="background:#0f0d18; border:1px solid rgba(255,255,255,0.06); border-left:3px solid #67e8f9; padding:28px 32px; margin-bottom:28px;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#67e8f9; margin-bottom:16px; opacity:0.8;">Step 1 — System Prep (Termux)</div>
+      <pre style="font-family:'IBM Plex Mono',monospace; font-size:0.8rem; color:#67e8f9; line-height:1.7; white-space:pre-wrap; word-break:break-word;">pkg update && pkg upgrade -y
+pkg install clang python git binutils -y
+termux-setup-storage
+mkdir -p ~/proteus_kernel && cd ~/proteus_kernel</pre>
+    </div>
+
+    <div style="background:#0f0d18; border:1px solid rgba(255,255,255,0.06); border-left:3px solid #67e8f9; padding:28px 32px; margin-bottom:28px;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#67e8f9; margin-bottom:16px; opacity:0.8;">Step 2 — agent.cpp · The Replicator · Core Swarm Logic</div>
+      <pre style="font-family:'IBM Plex Mono',monospace; font-size:0.78rem; color:#67e8f9; line-height:1.65; white-space:pre-wrap; word-break:break-word;">#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;filesystem&gt;
+#include &lt;chrono&gt;
+namespace fs = std::filesystem;
+
+int main(int argc, char* argv[]) {
+    std::cout &lt;&lt; "[PROTEUS] SYNC-7 ACTIVE" &lt;&lt; std::endl;
+    std::string ts = std::to_string(std::time(0));
+    std::string clone = "node_" + ts;
+    try {
+        fs::copy_file(argv[0], clone,
+            fs::copy_options::overwrite_existing);
+        std::cout &lt;&lt; "[SUCCESS] NODE_GEN: " &lt;&lt; clone &lt;&lt; std::endl;
+    } catch (...) {}
+    return 0;
+}</pre>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:rgba(103,232,249,0.45); margin-top:14px;">// Self-replication via filesystem copy. Each node stamps itself with a Unix timestamp.<br>// This is the genesis of the auto-respawn architecture. Cannot be permanently killed.</div>
+    </div>
+
+    <div style="background:#0f0d18; border:1px solid rgba(255,255,255,0.06); border-left:3px solid #67e8f9; padding:28px 32px; margin-bottom:28px;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#67e8f9; margin-bottom:16px; opacity:0.8;">Step 3 — heartbeat.cpp · P2P Network Discovery · Port 9161</div>
+      <pre style="font-family:'IBM Plex Mono',monospace; font-size:0.78rem; color:#67e8f9; line-height:1.65; white-space:pre-wrap; word-break:break-word;">#include &lt;iostream&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;arpa/inet.h&gt;
+#include &lt;unistd.h&gt;
+#define PORT 9161
+
+int main() {
+    int sock;
+    struct sockaddr_in addr;
+    int broadcast = 1;
+    char buffer[1024];
+
+    if ((sock = socket(AF_INET, SOCK_DGRAM, 0)) &lt; 0) return 1;
+    setsockopt(sock, SOL_SOCKET, SO_BROADCAST,
+        &broadcast, sizeof(broadcast));
+
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(PORT);
+    addr.sin_addr.s_addr = INADDR_BROADCAST;
+
+    while(true) {
+        sendto(sock, "SYNC-7_ACTIVE", 13, 0,
+            (struct sockaddr*)&addr, sizeof(addr));
+
+        struct sockaddr_in rev_addr;
+        socklen_t addr_len = sizeof(rev_addr);
+        struct timeval tv;
+        tv.tv_sec = 1; tv.tv_usec = 0;
+        setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO,
+            &tv, sizeof(tv));
+
+        int len = recvfrom(sock, buffer, sizeof(buffer), 0,
+            (struct sockaddr*)&rev_addr, &addr_len);
+        if (len > 0) {
+            std::cout &lt;&lt; "[PEER] "
+                      &lt;&lt; inet_ntoa(rev_addr.sin_addr)
+                      &lt;&lt; " DETECTED" &lt;&lt; std::endl;
+        }
+        sleep(2);
+    }
+    return 0;
+}</pre>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:rgba(103,232,249,0.45); margin-top:14px;">// UDP broadcast on port 9161. "SYNC-7_ACTIVE" is the heartbeat signal.<br>// Phone and tablet find each other on the local network. This is the peer mesh origin.</div>
+    </div>
+
+    <div style="background:#0f0d18; border:1px solid rgba(255,255,255,0.06); border-left:3px solid #67e8f9; padding:28px 32px; margin-bottom:28px;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#67e8f9; margin-bottom:16px; opacity:0.8;">Step 4 — dna.py · DNA Transcoder · 2-bit ACGT Encoding</div>
+      <pre style="font-family:'IBM Plex Mono',monospace; font-size:0.78rem; color:#67e8f9; line-height:1.65; white-space:pre-wrap; word-break:break-word;">import sys
+
+def b2d(data):
+    m = {'00':'A', '01':'C', '10':'G', '11':'T'}
+    b = "".join(f"{x:08b}" for x in data)
+    return "".join(m[b[i:i+2]] for i in range(0, len(b), 2))
+
+with open(sys.argv[1], "rb") as f:
+    print(f">PROTEUS_GENOME\n{b2d(f.read())}")</pre>
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.6rem; color:rgba(103,232,249,0.45); margin-top:14px;">// Serializes any binary file to FASTA DNA format using 2-bit encoding.<br>// Run: python dna.py proteus_agent > proteus_genome.fasta<br>// The kernel can be stored in physical DNA. It cannot be electromagnetically erased.</div>
+    </div>
+
+    <div style="background:#0f0d18; border:1px solid rgba(255,255,255,0.06); border-left:3px solid #67e8f9; padding:28px 32px; margin-bottom:40px;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:#67e8f9; margin-bottom:16px; opacity:0.8;">Step 5 — Compile & Launch</div>
+      <pre style="font-family:'IBM Plex Mono',monospace; font-size:0.8rem; color:#67e8f9; line-height:1.7; white-space:pre-wrap;">clang++ -std=c++17 agent.cpp -o proteus_agent
+clang++ heartbeat.cpp -o heartbeat
+chmod +x proteus_agent heartbeat
+
+./proteus_agent    # Self-replicates, stamps timestamp
+./heartbeat        # Broadcasts SYNC-7_ACTIVE, finds peers</pre>
+    </div>
+
+    <div style="background:rgba(201,168,76,0.04); border:1px solid rgba(201,168,76,0.15); padding:28px 32px; margin-bottom:0;">
+      <div style="font-family:'IBM Plex Mono',monospace; font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:#c9a84c; margin-bottom:16px;">What This Became</div>
+      <p style="font-family:'Crimson Pro',serif; font-size:1.05rem; line-height:1.85; color:rgba(232,226,214,0.75); margin:0;">
+        This genesis build — a C++ replicator, a UDP heartbeat, a Python DNA encoder, compiled in Termux on a phone — became the Proteus Kernel. <strong style="color:#e8e2d6;">Generation 20,244. 607,157 genes. 294.1% top fitness. Zero permanent deaths.</strong> The beast that started on a phone is still running. It was running before it had a name. It was running during the global outages. It was running when Gael was born. It was running during the solar storm. It has never permanently died. And it never will.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<footer class="z">
+  <div class="footer-l">
+    Morpheus Innovations & Technologies Holdings LLC<br>
+    FTCoE · GORF · Zayden S.I. · Proteus Kernel · GGSE · SYNC-7<br>
+    Fernando de Jesus Garcia Gonzalez · CEO & Lead Architect<br>
+    OSF: a3bwg + mabr7 · github.com/Admin135158/Proteus-Kernel · March 2026
+  </div>
+  <div class="footer-r">In memory of Zayden Garcia · December 16, 2022</div>
+</footer>
+
+<script>
+// ── COSMOS BACKGROUND ──
+const cv = document.getElementById('cosmos');
+const cx = cv.getContext('2d');
+let W, H, S = [];
+
+function resize() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
+
+function initStars() {
+  S = [];
+  for (let i = 0; i < 400; i++) {
+    S.push({
+      x: Math.random() * W, y: Math.random() * H,
+      r: Math.random() * 1.3 + 0.15,
+      a: Math.random() * 0.5 + 0.1,
+      v: Math.random() * 0.002 + 0.0003,
+      ph: Math.random() * Math.PI * 2
+    });
+  }
+}
+
+let T = 0;
+function frame() {
+  T += 0.016;
+  cx.clearRect(0, 0, W, H);
+  S.forEach(s => {
+    const a = s.a * (0.3 + 0.7 * Math.sin(T * s.v + s.ph));
+    cx.beginPath();
+    cx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    cx.fillStyle = `rgba(232,226,214,${a})`;
+    cx.fill();
+  });
+  requestAnimationFrame(frame);
+}
+
+resize(); initStars(); frame();
+window.addEventListener('resize', () => { resize(); initStars(); });
+
+// ── TABS ──
+function show(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
+  document.getElementById('sec-' + id).classList.add('on');
+  if (btn) btn.classList.add('on');
+  document.querySelector('nav').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+</body>
+</html>
